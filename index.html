@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Play Tic-Tac-Toe online and enjoy a classic game experience."
+    />
+    <meta
+      name="keywords"
+      content="Tic-Tac-Toe, online game, classic game, multiplayer game"
+    />
+    <meta name="author" content="Mohammad Sameer" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Tic-Tac-Toe - Classic Game" />
+    <meta
+      property="og:description"
+      content="Enjoy a fun and simple game of Tic Tac Toe on your browser."
+    />
+    <meta
+      property="og:image"
+      content="URL to image representing your website"
+    />
+    <meta property="og:url" content="https://www.yourwebsite.com" />
+    <title>TicTacToe - Play Tic-Tac-Toe online for free</title>
+  </head>
+
+  <link rel="stylesheet" href="styles.css" />
+  <body>
+    <header>
+      <h1>
+        <a href=""> Tic-Tac-Toe </a>
+      </h1>
+    </header>
+    <main>
+      <section id="game">
+        <div class="gameContainer">
+          <button class="box bone">
+            <span></span>
+          </button>
+          <button class="box btwo">
+            <span></span>
+          </button>
+          <button class="box bthree">
+            <span></span>
+          </button>
+          <button class="box bfour">
+            <span></span>
+          </button>
+          <button class="box bfive">
+            <span></span>
+          </button>
+          <button class="box bsix">
+            <span></span>
+          </button>
+          <button class="box bseven">
+            <span></span>
+          </button>
+          <button class="box beight">
+            <span></span>
+          </button>
+          <button class="box bnine">
+            <span></span>
+          </button>
+        </div>
+        <div class="pointsContainer">
+          <!--Points Container  -->
+          <div>
+            <h2>Score Card</h2>
+            <div class="gamePoints">
+              <div class="userCard" id="playerOneCard">
+                <div class="userIcon"></div>
+                <div class="nameAndBio">
+                  <div class="userName"></div>
+                  <div class="userBio"></div>
+                </div>
+                <div class="userScore">
+                  <div class="userPoints" id="userOnePoints"></div>
+                </div>
+              </div>
+              <div class="userCard" id="playerTwoCard">
+                <div class="userIcon"></div>
+                <div class="nameAndBio">
+                  <div class="userName"></div>
+                  <div class="userBio"></div>
+                </div>
+                <div class="userScore">
+                  <div class="userPoints" id="userTwoPoints"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--History Container  -->
+          <div>
+            <h2>History</h2>
+            <div class="historyContainer"></div>
+          </div>
+        </div>
+      </section>
+      <section class="modalsSection">
+        <div class="closeModalSectionModal">Close</div>
+        <div class="inputsContainer">
+          <h3>Edit Player Details</h3>
+          <div class="nameCnt">
+            <input
+              type="text"
+              class="nameInputClass"
+              id="inputName"
+              placeholder="Player Name"
+            />
+            <label for="inputName">Name</label>
+          </div>
+          <div class="bioCnt">
+            <textarea
+              class="bioInputClass"
+              id="inputBio"
+              placeholder="Bio"
+              rows="3"
+              cols="30"
+            ></textarea>
+            <label for="inputBio">Bio</label>
+          </div>
+          <div class="iconCnt">
+            <input
+              type="text"
+              id="inputIcon"
+              class="iconInputClass"
+              placeholder="Player Name"
+              maxlength="1"
+            />
+            <label for="inputIcon">Icon</label>
+          </div>
+          <!-- <div class="colorCnt">
+            <input type="color" class="colorInputClass" id="inputcolor" />
+            <label for="inputcolor">Color</label>
+          </div> -->
+          <button>Submit</button>
+        </div>
+      </section>
+      <div class="WinnermodalContainer">
+        <p></p>
+        <div class="newGameBtn">New Game</div>
+      </div>
+      <div class="alertsContainer">
+        <p>Alert</p>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
