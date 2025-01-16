@@ -5,6 +5,20 @@ let isGameWon = false;
 
 let modal = document.querySelector(".WinnermodalContainer");
 
+let playerOneSound = new Audio("assets/sounds/playerOne.mp3");
+let playerTwoSound = new Audio("assets/sounds/playerTwo.mp3");
+let gameOverSound = new Audio("assets/sounds/gameOver.mp3");
+let gameDrawSound = new Audio("assets/sounds/gameDraw.mp3");
+
+let cleanSound = new Audio("assets/sounds/cleanSound.mp3");
+
+//
+//
+//
+//
+//
+//
+//
 // Initialize Players and Handle Local Storage
 let playerOne = {
   name: "Player1",
@@ -46,12 +60,15 @@ boxes.forEach((box) => {
       console.log(gameIndex);
       if (userOneTurn) {
         box.innerHTML = playerOne.icon;
-        box.style.color = playerOne.color;
         userOneTurn = false;
+        playerOneSound.play();
+        // box.style.color = playerOne.color;
       } else {
         box.innerHTML = playerTwo.icon;
-        box.style.color = playerTwo.color;
         userOneTurn = true;
+        playerTwoSound.play();
+
+        // box.style.color = playerTwo.color;
       }
       box.disabled = true;
 
@@ -85,8 +102,15 @@ function isGameWonFunction() {
         //
         isGameWon = true;
         gameOver();
+        gameOverSound.play();
 
         winModalDisplayer(position1);
+
+        if (position1 === playerOne.icon) {
+          winnerAnimtaions(playerOne.color);
+        } else {
+          winnerAnimtaions(playerTwo.color);
+        }
 
         CongratulationsDisplayer(position1);
         winValuesUpdate(position1);
@@ -132,15 +156,15 @@ function winModalDisplayer(player) {
 
   if (player === playerOne.icon) {
     textDisplayer.innerText = `${playerOne.name} Won the match`;
-    WinnermodalContainer.style.color = "";
-    WinnermodalContainer.style.background = playerOne.color;
+    // WinnermodalContainer.style.color = "";
+    // WinnermodalContainer.style.background = playerOne.color;
   } else if (player === playerTwo.icon) {
     textDisplayer.innerText = `${playerTwo.name} Won the match`;
-    WinnermodalContainer.style.background = playerTwo.color;
-    WinnermodalContainer.style.color = "black";
+    // WinnermodalContainer.style.background = playerTwo.color;
+    // WinnermodalContainer.style.color = "black";
   } else {
-    WinnermodalContainer.style.background = "#333";
-    WinnermodalContainer.style.color = "";
+    // WinnermodalContainer.style.background = "#333";
+    // WinnermodalContainer.style.color = "";
     textDisplayer.innerText = `Game Draw`;
   }
 
@@ -154,6 +178,11 @@ function newGame() {
 
   enableBoxes();
   modal.classList.remove("WinnermodalContainerActive");
+
+  boxes.forEach((box) => {
+    box.classList.remove("winnerBoxClass");
+    box.style.borderColor = "";
+  });
 }
 
 let newGameBtn = document.querySelector(".newGameBtn");
@@ -162,6 +191,7 @@ newGameBtn.addEventListener("click", newGame);
 function gameDraw() {
   if (gameIndex === 9 && isGameWon === false) {
     winModalDisplayer();
+    gameDrawSound.play();
   }
 }
 
@@ -170,6 +200,7 @@ function mediaQueries() {
     let pointsContainer = document.querySelector(".pointsContainer");
     let gameSection = document.querySelector("#game");
     let sectionTwo = document.createElement("section");
+    sectionTwo.setAttribute("class", "sectionTwo");
 
     pointsContainer.style.cssText = "width:fit-content;margin:auto";
 
@@ -409,3 +440,36 @@ function closeInputsModalSecFunc() {
 }
 let closeModalSectionModal = document.querySelector(".closeModalSectionModal");
 closeModalSectionModal.addEventListener("click", closeInputsModalSecFunc);
+
+function clearStorageFunc() {
+  cleanSound.play();
+
+  let trashSvg = document.querySelector(".trashSvg");
+  trashSvg.classList.add("trashSvgActive");
+
+  setTimeout(() => {
+    localStorage.clear();
+
+    let divs = document.querySelectorAll(".gamePoints div");
+    divs.forEach((div) => {
+      div.style.visibility = "hidden";
+    });
+
+    alertFunc("Storage has been successfully cleared", "green", "1000");
+  }, 600);
+
+  setTimeout(() => {
+    window.location.href = "";
+  }, 1200);
+}
+
+document
+  .querySelector(".clearStorageCnt")
+  .addEventListener("click", clearStorageFunc);
+
+function winnerAnimtaions(borderColor) {
+  boxes.forEach((box) => {
+    box.classList.add("winnerBoxClass");
+    box.style.borderColor = borderColor;
+  });
+}
