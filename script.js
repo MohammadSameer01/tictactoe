@@ -27,7 +27,6 @@ let playerOne = {
   color: "red",
   winCount: 0,
 };
-
 let playerTwo = {
   name: "Player2",
   bio: "I play patiently, waiting for the perfect moment to strike. I enjoy exploiting my opponent’s mistakes and using every opportunity to take control. I may not move first, but I always think ahead to win.",
@@ -35,6 +34,8 @@ let playerTwo = {
   color: "yellow",
   winCount: 0,
 };
+playerOne.textColor = getTextColor(playerOne.color);
+playerTwo.textColor = getTextColor(playerTwo.color);
 
 // Retrieve players from local storage or set defaults
 function loadPlayersFromStorage() {
@@ -57,7 +58,6 @@ boxes.forEach((box) => {
   box.addEventListener("click", () => {
     if (playerOne.icon !== playerTwo.icon) {
       gameIndex++;
-      console.log(gameIndex);
       if (userOneTurn) {
         box.innerHTML = playerOne.icon;
         userOneTurn = false;
@@ -108,8 +108,10 @@ function isGameWonFunction() {
 
         if (position1 === playerOne.icon) {
           winnerAnimtaions(playerOne.color);
+          themeColorFunc(playerOne.color);
         } else {
           winnerAnimtaions(playerTwo.color);
+          themeColorFunc(playerTwo.color);
         }
 
         CongratulationsDisplayer(position1);
@@ -117,7 +119,6 @@ function isGameWonFunction() {
         savePlayersToStorage();
         updateValues();
 
-        console.log(`${position1} won the match`);
         if (navigator.vibrate) {
           navigator.vibrate([1000, 70, 10]); // Vibration pattern for win
         }
@@ -179,6 +180,8 @@ function newGame() {
   enableBoxes();
   modal.classList.remove("WinnermodalContainerActive");
 
+  themeColorFunc();
+
   boxes.forEach((box) => {
     box.classList.remove("winnerBoxClass");
     box.style.borderColor = "";
@@ -213,16 +216,22 @@ mediaQueries();
 function boxHoverEffectsFunction() {
   let userOneCard = document.getElementById("playerOneCard");
   let userTwoCard = document.getElementById("playerTwoCard");
+
+  userOneCard.style.background = playerOne.color;
+  userOneCard.style.color = playerOne.textColor;
+
+  userTwoCard.style.background = playerTwo.color;
+  userTwoCard.style.color = playerTwo.textColor;
+
   if (userOneTurn === true && gameIndex < 9 && isGameWon === false) {
-    userOneCard.style.background = "red";
-    userTwoCard.style.background = "";
+    userOneCard.style.opacity = "1";
+    userTwoCard.style.opacity = ".25";
   } else if (userOneTurn === false && gameIndex < 9 && isGameWon === false) {
-    userOneCard.style.background = "";
-    userTwoCard.style.background = "yellow";
+    userOneCard.style.opacity = ".25";
+    userTwoCard.style.opacity = "1";
   } else {
-    // HERE ADD WINNING DIALOG
-    userOneCard.style.background = "";
-    userTwoCard.style.background = "";
+    userOneCard.style.opacity = ".25";
+    userTwoCard.style.opacity = ".25";
   }
 
   boxes.forEach((box) => {
@@ -233,7 +242,7 @@ function boxHoverEffectsFunction() {
       window.matchMedia("(min-width: 900px)").matches
     ) {
       box.addEventListener("mouseenter", function () {
-        box.style.backgroundColor = "rgba(255, 0, 0, 0.2)"; // Change background color on hover
+        box.style.backgroundColor = playerOne.color; // Change background color on hover
       });
       box.addEventListener("mouseleave", function () {
         box.style.backgroundColor = ""; // Reset background when hover ends
@@ -244,11 +253,8 @@ function boxHoverEffectsFunction() {
       isGameWon === false &&
       window.matchMedia("(min-width: 900px)").matches
     ) {
-      // userTwoCard.style.background = "yellow";
-      // userOneCard.style.background = "";
-
       box.addEventListener("mouseenter", function () {
-        box.style.backgroundColor = "rgba(255, 255, 0, 0.2)"; // Change background color on hover
+        box.style.backgroundColor = playerTwo.color; // Change background color on hover
       });
 
       box.addEventListener("mouseleave", function () {
@@ -322,7 +328,64 @@ function editUserDetails() {
   let userCards = document.querySelectorAll(".userCard");
 
   userCards.forEach((card) => {
-    card.addEventListener("mouseenter", () => {
+    if (window.matchMedia("(min-width: 900px)").matches) {
+      card.addEventListener("mouseenter", () => {
+        let editBtn = document.createElement("div");
+        editBtn.innerText = "Edit";
+        editBtn.setAttribute("class", "editBtnClass");
+
+        if (gameIndex === 0) {
+          // Append the edit button to the card
+          card.append(editBtn);
+        }
+
+        // Add click listener for the edit button
+        editBtn.addEventListener("click", () => {
+          let inputsModal = document.querySelector(".inputsContainer");
+          inputsModal.classList.add("inputsModalActive");
+
+          let modalsSection = document.querySelector(".modalsSection");
+          modalsSection.classList.add("modalsSectionActive");
+
+          // Determine which player is being edited
+          if (card.id === "playerOneCard") {
+            currentPlayer = playerOne;
+          } else if (card.id === "playerTwoCard") {
+            currentPlayer = playerTwo;
+          }
+
+          // Populate the modal inputs with current player details
+          let nameInput = document.querySelector(
+            ".inputsContainer .nameInputClass"
+          );
+          let bioInput = document.querySelector(
+            ".inputsContainer .bioInputClass"
+          );
+
+          let iconInput = document.querySelector(
+            ".inputsContainer .iconInputClass"
+          );
+
+          //
+          let colorInput = document.querySelector(
+            ".inputsContainer .colorInputClass"
+          );
+
+          nameInput.value = currentPlayer.name;
+          bioInput.value = currentPlayer.bio;
+          iconInput.value = currentPlayer.icon;
+
+          colorInput.value = currentPlayer.color;
+        });
+      });
+      card.addEventListener("mouseleave", () => {
+        let editBtn = card.querySelector(".editBtnClass");
+        if (editBtn) {
+          editBtn.remove();
+        }
+      });
+      //
+    } else {
       let editBtn = document.createElement("div");
       editBtn.innerText = "Edit";
       editBtn.setAttribute("class", "editBtnClass");
@@ -358,19 +421,18 @@ function editUserDetails() {
         let iconInput = document.querySelector(
           ".inputsContainer .iconInputClass"
         );
+        //
+        let colorInput = document.querySelector(
+          ".inputsContainer .colorInputClass"
+        );
 
         nameInput.value = currentPlayer.name;
         bioInput.value = currentPlayer.bio;
         iconInput.value = currentPlayer.icon;
-      });
-    });
 
-    card.addEventListener("mouseleave", () => {
-      let editBtn = card.querySelector(".editBtnClass");
-      if (editBtn) {
-        editBtn.remove();
-      }
-    });
+        colorInput.value = currentPlayer.color;
+      });
+    }
   });
 }
 
@@ -387,6 +449,9 @@ function handleSubmitButton() {
       let iconInput = document.querySelector(
         ".inputsContainer .iconInputClass"
       );
+      let colorInput = document.querySelector(
+        ".inputsContainer .colorInputClass"
+      );
 
       currentPlayer.name = nameInput.value;
       currentPlayer.bio = bioInput.value;
@@ -400,6 +465,9 @@ function handleSubmitButton() {
           2000
         );
       }
+
+      currentPlayer.color = colorInput.value;
+      currentPlayer.textColor = getTextColor(currentPlayer.color);
 
       savePlayersToStorage();
       // Update displayed values
@@ -472,4 +540,56 @@ function winnerAnimtaions(borderColor) {
     box.classList.add("winnerBoxClass");
     box.style.borderColor = borderColor;
   });
+}
+
+function themeColorFunc(winnerColor) {
+  const rootStyles = getComputedStyle(document.documentElement);
+  const backgroundColor = rootStyles
+    .getPropertyValue("--backgroundColor")
+    .trim();
+
+  let metaTag = document.createElement("meta");
+  metaTag.setAttribute("name", "theme-color");
+  if (winnerColor) {
+    metaTag.setAttribute("content", winnerColor);
+  } else {
+    metaTag.setAttribute("content", backgroundColor);
+  }
+
+  document.head.prepend(metaTag);
+}
+themeColorFunc();
+
+function getTextColor(color) {
+  /**
+   * Returns a text color (either black or white) that contrasts well with the given color.
+   *
+   * @param {string} color - A string representing the color (can be a color name, hex, or rgb).
+   * @returns {string} - A string representing the text color in hex format (either "#000000" for black or "#FFFFFF" for white).
+   */
+
+  // Create a temporary element to resolve the color to its RGB format
+  const tempDiv = document.createElement("div");
+  tempDiv.style.color = color;
+  document.body.appendChild(tempDiv);
+
+  // Get the computed RGB color
+  const computedColor = getComputedStyle(tempDiv).color;
+  document.body.removeChild(tempDiv);
+
+  // Extract RGB values from "rgb(r, g, b)" format
+  const rgbMatch = computedColor.match(/\d+/g);
+  if (!rgbMatch || rgbMatch.length < 3) {
+    throw new Error("Invalid color format");
+  }
+
+  const r = parseInt(rgbMatch[0], 10);
+  const g = parseInt(rgbMatch[1], 10);
+  const b = parseInt(rgbMatch[2], 10);
+
+  // Calculate the luminance using the WCAG formula
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+  // Return white for dark backgrounds and black for light backgrounds
+  return luminance > 0.5 ? "#000000" : "#FFFFFF";
 }
