@@ -26,6 +26,8 @@
     <title>TicTacToe - Play Tic-Tac-Toe online for free</title>
   </head>
 
+  <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon" />
+
   <link rel="stylesheet" href="styles.css" />
   <body>
     <header>
@@ -92,14 +94,21 @@
             </div>
           </div>
           <!--History Container  -->
-          <div>
+          <!-- <div>
             <h2>History</h2>
             <div class="historyContainer"></div>
-          </div>
+          </div> -->
         </div>
       </section>
       <section class="modalsSection">
-        <div class="closeModalSectionModal">Close</div>
+        <div class="closeModalSectionModal">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+            <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+            <path
+              d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
+            />
+          </svg>
+        </div>
         <div class="inputsContainer">
           <h3>Edit Player Details</h3>
           <div class="nameCnt">
@@ -146,6 +155,21 @@
         <p>Alert</p>
       </div>
     </main>
+    <footer>
+      <div class="clearStorageCnt">
+        <span>Clear Storage</span>
+        <svg
+          class="trashSvg"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 448 512"
+        >
+          <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+          <path
+            d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"
+          />
+        </svg>
+      </div>
+    </footer>
 
     <script src="script.js"></script>
   </body>
