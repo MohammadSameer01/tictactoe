@@ -13,6 +13,9 @@
   padding: 0;
   box-sizing: border-box;
   font-family: var(--ffPoppins);
+
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 a {
   all: unset;
@@ -26,7 +29,12 @@ body {
 header {
   height: 65px;
   align-content: center;
+
+  position: sticky;
+  top: 0;
+  background: var(--backgroundColor);
 }
+
 header h1 {
   padding: 12px;
   font-size: 1.5em;
@@ -46,6 +54,7 @@ header h1 {
   align-items: center;
   transition: 0.3s ease;
 }
+
 .gameContainer {
   aspect-ratio: 1;
   width: 550px;
@@ -54,7 +63,16 @@ header h1 {
   align-items: center;
   flex-wrap: wrap;
   transition: 0.6s ease;
+
+  animation: gameScrollAnimation linear;
+  animation-timeline: scroll();
 }
+@keyframes gameScrollAnimation {
+  100% {
+    scale: 0.75;
+  }
+}
+
 .box {
   border: none;
   background: transparent;
@@ -74,9 +92,20 @@ header h1 {
   font-size: 9em;
   font-weight: 900;
 }
+
 .box:disabled {
   color: unset;
   background: unset;
+}
+
+.winnerBoxClass {
+  animation: winnerAnimation 0.3s ease-in 3;
+}
+
+@keyframes winnerAnimation {
+  100% {
+    border-color: transparent;
+  }
 }
 .box:nth-child(1),
 .box:nth-child(2),
@@ -236,14 +265,16 @@ header h1 {
   visibility: visible;
 }
 .modalsSection .closeModalSectionModal {
-  background: red;
-  padding: 6px 24px;
-  font-size: 0.75em;
+  padding: 12px;
   border-radius: 4px;
   position: absolute;
   top: 12px;
   right: 12px;
   cursor: pointer;
+}
+.closeModalSectionModal svg {
+  width: 24px;
+  fill: white;
 }
 .modalsSection h3 {
   width: 100%;
@@ -294,7 +325,6 @@ header h1 {
 }
 
 .inputsContainer button {
-  /* font-size: 1em; */
   padding: 6px 24px;
   border-radius: 8px;
   color: white;
@@ -332,7 +362,20 @@ header h1 {
 
   transform: translate(0, -100%);
   z-index: 1;
+  backdrop-filter: blur(36px);
+  background: linear-gradient(rgba(255, 255, 255, 0.05), #000);
+  border-radius: 0 0 48px 48px;
 }
+.WinnermodalContainer::after {
+  content: "";
+  position: absolute;
+  width: 48px;
+  height: 5px;
+  background: white;
+  border-radius: 12px;
+  bottom: 6px;
+}
+
 .WinnermodalContainer p {
   padding: 12px;
 }
@@ -341,7 +384,7 @@ header h1 {
 }
 
 .newGameBtn {
-  padding: 6px 12px;
+  padding: 12px 24px;
   background: blue;
   cursor: pointer;
   border-radius: 12px;
@@ -368,10 +411,49 @@ header h1 {
 .alertsContainer p {
   text-align: center;
 }
+
+footer {
+  padding: 12px;
+}
+
+.clearStorageCnt {
+  background: red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 300px;
+  margin: auto;
+
+  position: relative;
+}
+
+.clearStorageCnt .trashSvg {
+  height: 28px;
+  fill: white;
+  transition: 0.6s ease;
+}
+.trashSvgActive {
+  transform: rotate(360deg);
+}
 @media screen and (max-width: 500px) {
   #game {
     height: calc(100dvh - 65px - 120px);
   }
+  .sectionTwo {
+    background: var(--backgroundColor);
+    z-index: 1;
+    position: relative;
+  }
+  @keyframes gameScrollAnimation {
+    100% {
+      scale: 0.4;
+      transform: translate(0, 100%);
+    }
+  }
+
   .box {
     font-size: 5em;
   }
@@ -402,6 +484,15 @@ header h1 {
     top: unset;
     bottom: 0;
     transform: translate(0, 120px);
+
+    border-radius: 48px 48px 0 0;
+  }
+  .WinnermodalContainer::after {
+    top: 6px;
+  }
+  /* footer */
+  .clearStorageCnt {
+    width: auto;
   }
 }
 
