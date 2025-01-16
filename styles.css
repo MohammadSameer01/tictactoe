@@ -155,13 +155,10 @@ header h1 {
   width: 240px;
   position: relative;
   transition: 0.3s ease;
-  background: rgba(255, 0, 0, 0.3);
+  /* background: rgba(255, 0, 0, 0.3); */
 
   display: flex;
-}
-.userCard:nth-child(2) {
-  background: rgba(255, 255, 0, 0.3);
-  color: gray !important;
+  background: var(--backgroundColor);
 }
 
 .userIcon {
@@ -179,6 +176,8 @@ header h1 {
   font-size: 1.25em;
 
   z-index: 1;
+  backdrop-filter: blur(12px);
+  background: transparent !important;
 }
 .userIcon:nth-child(1) {
   background: var(--backgroundColor);
@@ -473,6 +472,10 @@ footer {
   }
   .userScore {
     width: 100%;
+  }
+  .userPoints {
+    text-align: unset;
+    padding: 6px;
   }
   .userBio {
     line-clamp: 5;
