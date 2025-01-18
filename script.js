@@ -743,7 +743,7 @@ function winningLineDisplay(patternWin, winLineBgColor) {
     winLine.style.rotate = "0deg";
 
     if (window.innerWidth < 850) {
-      winLine.style.transform = "translateX(105px)";
+      winLine.style.transform = "translateX(125px)";
     } else {
       winLine.style.transform = "translateX(185px)";
     }
