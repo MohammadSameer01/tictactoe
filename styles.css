@@ -6,8 +6,24 @@
 
   --backgroundColor: #111;
   --textColor: #fff;
+
   --colorBorder: rgba(255, 255, 255, 0.75);
+  --colorBorder2: rgba(255, 255, 255, 0.1);
+
+  --backgroudInputs: #202020;
+  --backgroundLessOpacity: rgba(0, 0, 0, 0.5);
 }
+/* lightThemeColors{
+  --backgroundColor: #efefef;
+  --textColor: #000000;
+
+  --colorBorder: rgba(0, 0, 0, 0.75);
+  --colorBorder2: rgb(0, 0, 0);
+
+  --backgroudInputs: #ffffff;
+  --backgroundLessOpacity: rgba(0, 0, 0, 0.5);
+} */
+
 * {
   margin: 0;
   padding: 0;
@@ -21,6 +37,10 @@ a {
   all: unset;
   cursor: pointer;
 }
+svg {
+  fill: var(--textColor);
+}
+
 body {
   background: var(--backgroundColor);
   color: var(--textColor);
@@ -33,14 +53,25 @@ header {
   position: sticky;
   top: 0;
   background: var(--backgroundColor);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
 }
 
 header h1 {
-  padding: 12px;
   font-size: 1.5em;
-  font-weight: 550;
   font-family: var(--ffCherry);
   font-weight: 900;
+}
+.soundCnt {
+  fill: var(--textColor);
+  align-content: center;
+  padding: 8px;
+  width: 48px;
+  align-content: center;
+  cursor: pointer;
 }
 
 /* Game Section */
@@ -62,15 +93,30 @@ header h1 {
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
-  transition: 0.6s ease;
+  transition: 0.3s ease;
 
   animation: gameScrollAnimation linear;
   animation-timeline: scroll();
 }
+
 @keyframes gameScrollAnimation {
   100% {
     scale: 0.75;
   }
+}
+.winningLineCnt {
+  position: absolute;
+  aspect-ratio: 1;
+  width: 550px;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.winningLine {
+  height: 0%;
+  width: 4px;
+  transition: 0.3s ease;
 }
 
 .box {
@@ -85,7 +131,6 @@ header h1 {
   flex-grow: 1;
   transition: all 0.1s ease;
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
   cursor: pointer;
   overflow: hidden;
   font-family: var(--ffCherry);
@@ -127,12 +172,17 @@ header h1 {
 .pointsContainer {
   padding: 24px 12px;
   height: 75%;
+
+  max-width: 100%;
+
+  display: none;
+  transition: 0.3s ease;
 }
 
 .pointsContainer > div {
   margin-bottom: 24px;
   padding: 36px 12px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--colorBorder2);
   border-radius: 12px;
   position: relative;
 }
@@ -152,10 +202,9 @@ header h1 {
   padding-top: 12px;
   font-size: 1em;
   border-radius: 12px;
-  width: 240px;
+  width: 260px;
   position: relative;
   transition: 0.3s ease;
-  /* background: rgba(255, 0, 0, 0.3); */
 
   display: flex;
   background: var(--backgroundColor);
@@ -178,9 +227,6 @@ header h1 {
   z-index: 1;
   backdrop-filter: blur(12px);
   background: transparent !important;
-}
-.userIcon:nth-child(1) {
-  background: var(--backgroundColor);
 }
 .nameAndBio {
   width: 70%;
@@ -206,7 +252,9 @@ header h1 {
 }
 
 .userScore {
-  width: 30%;
+  min-width: 30%;
+  width: fit-content;
+  align-content: center;
 }
 .userPoints {
   margin-top: 6px;
@@ -220,12 +268,11 @@ header h1 {
   position: absolute;
   right: 12px;
   bottom: 12px;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--backgroundLessOpacity);
   padding: 4px 12px;
   font-size: 0.75em;
   cursor: pointer;
   border-radius: 8px;
-
   backdrop-filter: blur(12px);
 }
 .gameWonTextClass {
@@ -260,7 +307,7 @@ header h1 {
 .modalsSectionActive {
   z-index: 1;
   backdrop-filter: blur(24px);
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--backgroundLessOpacity);
   visibility: visible;
 }
 .modalsSection .closeModalSectionModal {
@@ -272,8 +319,7 @@ header h1 {
   cursor: pointer;
 }
 .closeModalSectionModal svg {
-  width: 24px;
-  fill: white;
+  height: 28px;
 }
 .modalsSection h3 {
   width: 100%;
@@ -290,7 +336,7 @@ header h1 {
 
   transition: 0.3s ease;
   scale: 0;
-  background: #202020;
+  background: var(--backgroudInputs);
 }
 .inputsModalActive {
   scale: 1;
@@ -306,8 +352,8 @@ header h1 {
   min-width: 240px;
   border-radius: 4px;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
+  border: 1px solid var(--colorBorder2);
+  color: var(--textColor);
 
   width: 300px;
   padding-top: 12px;
@@ -326,14 +372,15 @@ header h1 {
 .inputsContainer button {
   padding: 6px 24px;
   border-radius: 8px;
-  color: white;
+  color: var(--textColor);
   background: blue;
+  color: white;
   border: 0;
   cursor: pointer;
 }
 
 .inputsContainer label {
-  background: #202020;
+  background: var(--backgroudInputs);
   position: absolute;
   z-index: 1;
   top: 0;
@@ -370,7 +417,7 @@ header h1 {
   position: absolute;
   width: 48px;
   height: 5px;
-  background: white;
+  background: var(--textColor);
   border-radius: 12px;
   bottom: 6px;
 }
@@ -385,28 +432,32 @@ header h1 {
 .newGameBtn {
   padding: 12px 24px;
   background: blue;
+  color: white;
   cursor: pointer;
   border-radius: 12px;
-  color: white;
 }
 
 .alertsContainer {
   position: fixed;
-  top: 0;
-  width: 100vw;
-  padding: 12px;
-  transform: translate(0, -100%);
+  transform: translate(0, 100%);
   transition: 0.3s ease;
-
-  width: 92%;
-  margin-left: 4%;
-  border-radius: 8px;
   font-size: 0.9em;
+
+  min-width: 400px;
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 8px;
+
+  bottom: 12px;
+  right: 12px;
+  height: fit-content;
+  padding: 12px;
 }
+
 .alertsContainerActive {
-  transform: translate(0, 12px);
-  background: red;
+  transform: translate(0);
 }
+
 .alertsContainer p {
   text-align: center;
 }
@@ -431,7 +482,6 @@ footer {
 
 .clearStorageCnt .trashSvg {
   height: 28px;
-  fill: white;
   transition: 0.6s ease;
 }
 .trashSvgActive {
@@ -441,6 +491,11 @@ footer {
   #game {
     height: calc(100dvh - 65px - 120px);
   }
+
+  .winningLineCnt {
+    width: 100%;
+  }
+
   .sectionTwo {
     background: var(--backgroundColor);
     z-index: 1;
@@ -493,6 +548,21 @@ footer {
   .WinnermodalContainer::after {
     top: 6px;
   }
+
+  .alertsContainer {
+    transform: translate(0, -100%);
+    min-width: unset;
+    width: 92%;
+    max-width: unset;
+
+    top: 12px;
+    left: 4%;
+  }
+
+  .alertsContainerActive {
+    transform: translate(0);
+  }
+
   /* footer */
   .clearStorageCnt {
     width: auto;
