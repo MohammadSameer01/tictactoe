@@ -1,0 +1,16 @@
+{
+  "name": "Tic-Tac-Toe",
+  "short_name": "TicTacToe",
+  "description": "Play Tic-Tac-Toe online with a modern and interactive UI!",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#111",
+  "theme_color": "#111",
+  "icons": [
+    {
+      "src": "assets/img/favicon.ico",
+      "sizes": "48x48 72x72 96x96 144x144 192x192 256x256 384x384 512x512",
+      "type": "image/x-icon"
+    }
+  ]
+}
